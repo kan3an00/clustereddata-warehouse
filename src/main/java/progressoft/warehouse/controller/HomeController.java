@@ -11,7 +11,7 @@ public class HomeController {
     @GetMapping("/")
     @ResponseBody
     public String index() {
-        return "Hello World!";
+        return "The application is up and running!";
     }
 
 }

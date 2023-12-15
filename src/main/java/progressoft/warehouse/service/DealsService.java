@@ -31,12 +31,6 @@ public class DealsService {
                 .toList();
     }
 
-    public DealsDTO get(final Long id) {
-        return dealsRepository.findById(id)
-                .map(deals -> mapToDTO(deals, new DealsDTO()))
-                .orElseThrow(NotFoundException::new);
-    }
-
     public Long create(final DealsDTO dealsDTO) {
         logger.info("create dealsDTO: {}, {}, {}", dealsDTO.getFromCurrency(), dealsDTO.getToCurrency(), dealsDTO.getAmount());
         if (dealsRepository.existsByFromCurrencyAndToCurrencyAndAmount(dealsDTO.getFromCurrency(), dealsDTO.getToCurrency(), dealsDTO.getAmount())) {
@@ -45,17 +39,6 @@ public class DealsService {
         final Deals deals = new Deals();
         mapToEntity(dealsDTO, deals);
         return dealsRepository.save(deals).getId();
-    }
-
-    public void update(final Long id, final DealsDTO dealsDTO) {
-        final Deals deals = dealsRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
-        mapToEntity(dealsDTO, deals);
-        dealsRepository.save(deals);
-    }
-
-    public void delete(final Long id) {
-        dealsRepository.deleteById(id);
     }
 
     private DealsDTO mapToDTO(final Deals deals, final DealsDTO dealsDTO) {
