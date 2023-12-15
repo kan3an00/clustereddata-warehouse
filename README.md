@@ -1,45 +1,43 @@
-# Warehouse
+# ClusteredData Warehouse
 
-This app was created with Bootify.io - tips on working with the code [can be found here](https://bootify.io/next-steps/).
-Feel free to contact us for further questions.
+This project is part of a Scrum team's development effort to create a data warehouse for Bloomberg to analyze FX deals.
 
-## Development
+## Overview
 
-When starting the application `docker compose up` is called and the app will connect to the contained services.
-[Docker](https://www.docker.com/get-started/) must be available on the current system.
+The system aims to accept deal details and persist them into a database. The required request fields include Deal Unique Id, From Currency ISO Code "Ordering Currency," To Currency ISO Code, Deal timestamp, and Deal Amount in the ordering currency.
 
-During development it is recommended to use the profile `local`. In IntelliJ `-Dspring.profiles.active=local` can be
-added in the VM options of the Run Configuration after enabling this property in "Modify options". Create your own
-`application-local.properties` file to override settings for development.
+## Functionality
 
-Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
-[learn more](https://bootify.io/next-steps/spring-boot-with-lombok.html).
+- Validates row structure (checks for missing fields, type format, etc.).
+- Prevents importing duplicate requests.
+- Implements error/exception handling.
+- Provides proper logging and documentation.
+- Supports unit testing with coverage.
 
-After starting the application it is accessible under `localhost:8080`.
+## Technology Stack
 
-## Build
+- **Database:** MySQL.
+- **Deployment:** Docker Compose.
+- **Build Tool:** Maven.
+- **Framework:** Java Spring Boot.
 
-The application can be built using the following command:
+## Getting Started
 
-```
-mvnw clean package
-```
+### Prerequisites
 
-Start your application with the following command - here with the profile `production`:
+- Java Development Kit (JDK)
+- Docker
+- Maven
 
-```
-java -Dspring.profiles.active=production -jar ./target/warehouse-0.0.1-SNAPSHOT.jar
-```
+### Installation
 
-If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
-environment variable when running the container.
+1. Clone the repository.
+2. Navigate to the project root.
 
-```
-mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=progressoft/warehouse
-```
+### Usage
 
-## Further readings
+#### Building the Application
 
-* [Maven docs](https://maven.apache.org/guides/index.html)  
-* [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
-* [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)  
+```bash
+# Build the Docker containers
+docker-compose up --build

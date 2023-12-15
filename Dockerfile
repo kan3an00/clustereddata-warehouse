@@ -1,9 +1,6 @@
-FROM openjdk:17-oracle
-
-WORKDIR /app
-
-COPY target/warehouse.jar /app/warehouse.jar
-
+FROM maven:3.8.3-openjdk-17 AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
 EXPOSE 8080
-
-CMD ["java", "-jar", "warehouse.jar"]
+ENTRYPOINT ["java","-jar","/home/app/target/warehouse.jar"]

@@ -41,8 +41,13 @@ public class DealsResource {
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createDeals(@RequestBody @Valid final DealsDTO dealsDTO) {
-        final Long createdId = dealsService.create(dealsDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        try {
+            final Long createdId = dealsService.create(dealsDTO);
+            return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        } catch (IllegalStateException e) {
+            // Log the error if needed
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/{id}")
